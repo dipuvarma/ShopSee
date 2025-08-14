@@ -1,7 +1,7 @@
 package com.dipuguide.shopsee.presentation.ui.theme
 import androidx.compose.ui.graphics.Color
 
-val primaryLight = Color(0xFF854B71)
+val primaryLight = Color(0xFF580A46)
 val onPrimaryLight = Color(0xFFFFFFFF)
 val primaryContainerLight = Color(0xFFFFD8EC)
 val onPrimaryContainerLight = Color(0xFF6A3458)
