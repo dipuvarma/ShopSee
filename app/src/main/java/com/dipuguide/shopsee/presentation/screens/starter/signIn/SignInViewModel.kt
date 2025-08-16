@@ -1,4 +1,4 @@
-package com.dipuguide.shopsee.presentation.screens.starter.signUp
+package com.dipuguide.shopsee.presentation.screens.starter.signIn
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -14,8 +14,9 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+
 @HiltViewModel
-class SignUpViewModel @Inject constructor(
+class SignInViewModel @Inject constructor(
     private val authRepo: AuthRepo,
 ) : ViewModel() {
 
@@ -28,55 +29,31 @@ class SignUpViewModel @Inject constructor(
     private val _isUserAuthenticated = MutableStateFlow(false)
     val isUserAuthenticated: StateFlow<Boolean> = _isUserAuthenticated.asStateFlow()
 
-
-    fun onSignUpEvent(event: SignUpEvent) {
+    fun onEvent(event: SignInEvent) {
         when (event) {
-            is SignUpEvent.OnSignUpClick -> {
-                signUp(
-                    name = userDetailState.value.userName,
+            is SignInEvent.OnEmailChange -> {
+                _userDetailState.update {
+                    it.copy(
+                        userEmail = event.userEmail
+                    )
+                }
+            }
+
+            is SignInEvent.OnPasswordChange -> {
+                _userDetailState.update {
+                    it.copy(
+                        userPassword = event.password
+                    )
+                }
+            }
+
+            is SignInEvent.OnSignInClick -> {
+                signIn(
                     email = userDetailState.value.userEmail,
                     password = userDetailState.value.userPassword
                 )
-
-            }
-
-            is SignUpEvent.OnEmailChange -> {
-                _userDetailState.update {
-                    it.copy(userEmail = event.userEmail)
-                }
-            }
-
-            is SignUpEvent.OnNameChange -> {
-                _userDetailState.update {
-                    it.copy(userName = event.userName)
-                }
-            }
-
-            is SignUpEvent.OnPasswordChange -> {
-                _userDetailState.update {
-                    it.copy(userPassword = event.password)
-                }
             }
         }
-    }
-
-
-    fun signUp(name: String, email: String, password: String) {
-        viewModelScope.launch {
-            _uiState.value = UiState.Loading
-            val result = authRepo.signUp(email = email, password = password)
-            result.onSuccess {
-                _uiState.value = UiState.Success("Account created successfully!")
-            }
-            result.onFailure { error ->
-                _uiState.value =
-                    UiState.Success(error.localizedMessage ?: "Sign up failed. Please try again.")
-            }
-        }
-    }
-
-    fun resetUiState() {
-        _uiState.value = UiState.Idle
     }
 
     fun signIn(email: String, password: String) {
@@ -86,11 +63,14 @@ class SignUpViewModel @Inject constructor(
             result.onSuccess {
                 _uiState.value = UiState.Success("Sign in successfully!")
             }
-            result.onFailure { error ->
-                _uiState.value =
-                    UiState.Success(error.localizedMessage ?: "Sign in failed. Please try again.")
+            result.onFailure {
+                _uiState.value = UiState.Error(it.localizedMessage ?: "Sign in failed!")
             }
         }
+    }
+
+    fun resetUiState(){
+        _uiState.value = UiState.Idle
     }
 
 }

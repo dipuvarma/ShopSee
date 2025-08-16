@@ -2,6 +2,7 @@ package com.dipuguide.shopsee.presentation.screens.starter.signUp
 
 import android.util.Log
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -21,7 +22,6 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
@@ -130,7 +130,7 @@ fun SignUpScreen() {
             OutlinedTextField(
                 value = userDetails.userName,
                 onValueChange = { name ->
-                    viewModel.onSignUpEvent(event = SignUpOnEvent.OnNameChange(name))
+                    viewModel.onSignUpEvent(event = SignUpEvent.OnNameChange(name))
                 },
                 modifier = Modifier.fillMaxWidth(),
                 placeholder = {
@@ -150,7 +150,7 @@ fun SignUpScreen() {
             EmailTextField(
                 value = userDetails.userEmail,
                 onValueChange = { email ->
-                    viewModel.onSignUpEvent(event = SignUpOnEvent.OnEmailChange(email))
+                    viewModel.onSignUpEvent(event = SignUpEvent.OnEmailChange(email))
                 },
                 label = stringResource(R.string.email),
                 placeHolder = stringResource(R.string.enter_email)
@@ -161,7 +161,7 @@ fun SignUpScreen() {
             PasswordTextField(
                 value = userDetails.userPassword,
                 onValueChange = { password ->
-                    viewModel.onSignUpEvent(event = SignUpOnEvent.OnPasswordChange(password))
+                    viewModel.onSignUpEvent(event = SignUpEvent.OnPasswordChange(password))
                 },
                 label = stringResource(R.string.password),
                 placeHolder = stringResource(R.string.enter_password)
@@ -179,7 +179,7 @@ fun SignUpScreen() {
                     contentColor = MaterialTheme.colorScheme.onPrimary
                 ),
                 onClick = {
-                    viewModel.onSignUpEvent(event = SignUpOnEvent.OnSignUpClick)
+                    viewModel.onSignUpEvent(event = SignUpEvent.OnSignUpClick)
                 }
             ) {
                 if (uiState is UiState.Loading) {
@@ -235,6 +235,9 @@ fun SignUpScreen() {
                 Spacer(modifier = Modifier.width(Dimen.SpacerSmall))
                 Text(
                     text = stringResource(R.string.sign_in),
+                    modifier = Modifier.clickable {
+                        navController.navigate(SignInRoute)
+                    },
                     color = MaterialTheme.colorScheme.primary,
                     fontWeight = FontWeight.SemiBold
                 )
