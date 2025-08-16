@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.dipuguide.shopsee" />
+                  <option name="mobileSdkAppId" value="1:648164317300:android:301027012c3b9f98951921" />
+                  <option name="projectId" value="todoapp-dae4c" />
+                  <option name="projectNumber" value="648164317300" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
