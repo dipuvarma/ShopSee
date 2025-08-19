@@ -20,12 +20,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.dipuguide.shopsee.presentation.navigation.LocalNavController
+import com.dipuguide.shopsee.presentation.navigation.SignInRoute
+import com.dipuguide.shopsee.presentation.navigation.SignUpRoute
 import com.dipuguide.shopsee.presentation.screens.starter.signIn.SignInScreen
 import com.dipuguide.shopsee.presentation.ui.theme.ShopSeeTheme
 import com.dipuguide.shopsee.utils.Dimen
 
 @Composable
 fun OnBoardingScreen(modifier: Modifier = Modifier) {
+    val navController = LocalNavController.current
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -58,7 +63,7 @@ fun OnBoardingScreen(modifier: Modifier = Modifier) {
                 contentColor = MaterialTheme.colorScheme.primary
             ),
             onClick = {
-
+                navController.navigate(SignInRoute)
             }
         ) {
             Text(
@@ -76,7 +81,7 @@ fun OnBoardingScreen(modifier: Modifier = Modifier) {
                 contentColor = MaterialTheme.colorScheme.onPrimary
             ),
             onClick = {
-
+                navController.navigate(SignUpRoute)
             }
         ) {
             Text(

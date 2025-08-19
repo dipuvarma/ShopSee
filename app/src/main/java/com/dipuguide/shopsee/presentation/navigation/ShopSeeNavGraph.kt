@@ -30,7 +30,7 @@ fun ShopSeeNavGraph(modifier: Modifier = Modifier) {
     CompositionLocalProvider(LocalNavController provides navController) {
         NavHost(
             navController = navController,
-            startDestination = SignUpRoute
+            startDestination = SplashRoute
         ) {
             composable<SplashRoute> {
                 SplashScreen()

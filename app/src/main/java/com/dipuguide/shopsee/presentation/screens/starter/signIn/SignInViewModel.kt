@@ -9,7 +9,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -23,8 +22,8 @@ class SignInViewModel @Inject constructor(
     private val _uiState = MutableStateFlow<UiState>(UiState.Idle)
     val uiState: StateFlow<UiState> = _uiState.asStateFlow()
 
-    private val _userDetailState = MutableStateFlow(UserDetail())
-    val userDetailState: StateFlow<UserDetail> = _userDetailState.asStateFlow()
+    private val _userDetailState = MutableStateFlow(SignInUiState())
+    val userDetailState: StateFlow<SignInUiState> = _userDetailState.asStateFlow()
 
     private val _isUserAuthenticated = MutableStateFlow(false)
     val isUserAuthenticated: StateFlow<Boolean> = _isUserAuthenticated.asStateFlow()
@@ -34,7 +33,7 @@ class SignInViewModel @Inject constructor(
             is SignInEvent.OnEmailChange -> {
                 _userDetailState.update {
                     it.copy(
-                        userEmail = event.userEmail
+                        email = event.userEmail
                     )
                 }
             }
@@ -42,15 +41,15 @@ class SignInViewModel @Inject constructor(
             is SignInEvent.OnPasswordChange -> {
                 _userDetailState.update {
                     it.copy(
-                        userPassword = event.password
+                        password = event.password
                     )
                 }
             }
 
             is SignInEvent.OnSignInClick -> {
                 signIn(
-                    email = userDetailState.value.userEmail,
-                    password = userDetailState.value.userPassword
+                    email = userDetailState.value.email,
+                    password = userDetailState.value.password
                 )
             }
         }
@@ -69,7 +68,7 @@ class SignInViewModel @Inject constructor(
         }
     }
 
-    fun resetUiState(){
+    fun resetUiState() {
         _uiState.value = UiState.Idle
     }
 
